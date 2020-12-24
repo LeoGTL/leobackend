@@ -11,5 +11,3 @@ sleep 3
 
 echo "##重新启动程序"
 nohup $JAVA_HOME/bin/java -jar target/leobackend-1.0-SNAPSHOT.jar >> logs/leobackend.log &
-
-exit 0
