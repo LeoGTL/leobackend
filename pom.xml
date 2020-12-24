@@ -35,6 +35,8 @@
                 <configuration>
                     <archive>
                         <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>org.leobackend.App</mainClass>
                         </manifest>
                     </archive>
@@ -42,7 +44,17 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <artifactId>maven-dependency-plugin</artifactId>   
+                <execution>   
+                    <id>copy-dependencies</id>   
+                    <phase>package</phase>
+                    <goals>
+                         <goal>copy-dependencies</goal>    
+                    </goals>   
+                    <configuration>
+                         <outputDirectory>${project.build.directory}/lib</outputDirectory>    
+                    </configuration>
+                </execution>         
             </plugin>
         </plugins>
     </build>
