@@ -10,3 +10,4 @@ fi
 sleep 3
 
 nohup $JAVA_HOME/bin/java -jar target/leobackend-1.0-SNAPSHOT.jar >> logs/leobackend.log &
+echo "##程序重启结束"
