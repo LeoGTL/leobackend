@@ -15,4 +15,4 @@ echo "1..."
 sleep 1
 
 nohup $JAVA_HOME/bin/java -jar target/leobackend-1.0-SNAPSHOT.jar >> logs/leobackend.log &
-echo "##程序重启完毕..."
+echo "##程序重启完毕."
