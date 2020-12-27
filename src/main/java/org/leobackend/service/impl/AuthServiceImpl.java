@@ -26,7 +26,8 @@ public class AuthServiceImpl implements AuthService {
     public String getToken(LoginRequestDTO requestDTO) {
         String username = requestDTO.getUsername();
         String password = requestDTO.getPassword();
-        User user = userDao.getUserByNameAndPasswd(username, password);
+        String passwordMd5 = TokenUtils.getMd5(password);
+        User user = userDao.getUserByNameAndPasswd(username, passwordMd5);
         if (user == null) {
             return null;
         }
@@ -34,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
         if (!StringUtils.isEmpty(existsToken)) {
             return existsToken;
         }
-        String token = TokenUtils.createToken(username, TokenUtils.getMd5(password));
+        String token = TokenUtils.createToken(username, passwordMd5);
         try {
             userDao.updateTokenForUser (username, token);
             return token;
