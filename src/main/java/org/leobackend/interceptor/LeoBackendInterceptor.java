@@ -26,7 +26,7 @@ public class LeoBackendInterceptor implements HandlerInterceptor {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.sendRedirect(request.getRequestURL().append("api/auth/error").toString());
+        response.sendRedirect("http://" + request.getHeader("Host") + "/api/auth/error");
         return true;
     }
 
