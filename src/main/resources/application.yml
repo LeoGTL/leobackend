@@ -1,2 +1,9 @@
 server:
   port: 8090
+
+spring:
+  datasource:
+    username: leo
+    password: uglyME..gtl
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://49.234.55.216:3306/leo?serverTimezone=PRC&useUnicode=true&characterEncoding=UTF8
