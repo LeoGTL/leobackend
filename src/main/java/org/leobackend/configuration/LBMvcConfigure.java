@@ -1,6 +1,6 @@
 package org.leobackend.configuration;
 
-import org.leobackend.interceptor.LeoBackendInterceptor;
+import org.leobackend.interceptor.LBInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -12,11 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author Leo
  */
 @Configuration
-public class LeoBackendMvcConfigure implements WebMvcConfigurer {
+public class LBMvcConfigure implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LeoBackendInterceptor())
+        registry.addInterceptor(new LBInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/api/auth/**");
     }

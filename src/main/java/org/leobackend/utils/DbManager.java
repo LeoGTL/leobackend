@@ -4,7 +4,6 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,6 +30,10 @@ public class DbManager {
         }
     }
 
+    /**
+     * 获取连接对象
+     * @return Connection
+     */
     private Connection getConnection () {
         try {
             return dataSource.getConnection();
@@ -40,7 +43,11 @@ public class DbManager {
         return null;
     }
 
-    public void close (Connection connection) {
+    /**
+     * 向连接池归还连接
+     * @param connection Connection
+     */
+    private void close (Connection connection) {
         try {
             if (connection != null)
                 connection.close();
@@ -49,17 +56,27 @@ public class DbManager {
         }
     }
 
+    /**
+     * 执行查询
+     * @param sql sql语句：select label1,label2,label3 from tableName where param1=? and param2=?
+     * @param labels 如上：label1,label2...
+     * @param params ?占位符参数
+     * @return 数据集合
+     */
     public List<Map<String, Object>> query(String sql, String[] labels, String[] params) {
 
-            Connection connection = null;
+        Connection connection = null;
         try {
-            List<Map<String, Object>> resultList = new ArrayList<>();
             connection = this.getConnection();
+            assert connection != null;
             PreparedStatement statement = connection.prepareStatement(sql);
+
             int paramIndex = 1;
             for (String param : params) {
                 statement.setString(paramIndex++, param);
             }
+
+            List<Map<String, Object>> resultList = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Map<String, Object> rowMap = new HashMap<>();

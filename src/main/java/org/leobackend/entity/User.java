@@ -19,6 +19,7 @@ public class User {
     private String nickname;
     private String tel;
     private String email;
+    private String token;
     private String remark;
     private Date crateTime;
     private Date updateTime;

@@ -2,6 +2,7 @@ package org.leobackend.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.leobackend.entity.User;
 
 /**
@@ -16,7 +17,6 @@ public interface UserMapper {
     @Select("SELECT * FROM t_sys_user WHERE username=#{username} and password=#{password}")
     User getUserByNameAndPasswd(String username, String password);
 
-    @Select("SELECT * FROM t_sys_user WHERE username=#{username}")
-    User getUserByName(String username);
-
+    @Update("UPDATE t_sys_user SET token=#{token} WHERE username=#{username}")
+    void updateTokenForUser(String username, String token);
 }

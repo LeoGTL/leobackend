@@ -7,6 +7,10 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.leobackend.entity.TokenEntity;
 import org.springframework.beans.BeanUtils;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +27,9 @@ public class TokenUtils {
 
     /**
      * 创建Token
-     * @param username
-     * @param passwd
-     * @return
+     * @param username 用户名
+     * @param password 密码
+     * @return token
      */
     public static String createToken (String username, String password) {
         String token = JWT.create()
@@ -38,10 +42,8 @@ public class TokenUtils {
 
     /**
      * 解析token
-     * @param token
-     * @param username
-     * @param password
-     * @return
+     * @param token token
+     * @return TokenEntity
      */
     public static TokenEntity verifyToken (String token) {
         try {
@@ -50,18 +52,39 @@ public class TokenUtils {
             String username = decodedJWT.getClaim("username").asString();
             Date issuedDate = decodedJWT.getClaim("issuedDate").asDate();
             // 获取密码
-            List<Map<String, Object>> resultList = DbManager.getInstance().query ("select id,username,password,nickname,tel,email from t_sys_user where username=?",
-                    new String[]{"id","username","password","nickname","tel","email"}, new String[]{username});
-            JWTVerifier verifier = JWT.require(Algorithm.HMAC256((String) resultList.get(0).get("password")))
+            List<Map<String, Object>> resultList = DbManager.getInstance().query ("select id,username,password,nickname,tel,email,token from t_sys_user where username=?",
+                    new String[]{"id","username","password","nickname","tel","email","token"}, new String[]{username});
+            Map<String, Object> row = resultList.get(0);
+            JWTVerifier verifier = JWT.require(Algorithm.HMAC256((String) row.get("password")))
                     .withClaim("issuer", ISSUER)
                     .withClaim("username", username)
                     .withClaim("issuedDate", issuedDate)
                     .build();
             DecodedJWT jwt = verifier.verify(token);
             BeanUtils.copyProperties(jwt, tokenEntity);
+            if (!token.equals(row.get("token"))) {
+                System.out.println("当前token已失效");
+                return null;
+            }
             return tokenEntity;
         } catch (Exception e) {
-            System.out.println("token验证失败");
+            System.out.println("token不合法");
+        }
+        return null;
+    }
+
+    /**
+     * 获取字符串md5
+     * @param src 源串
+     * @return md5
+     */
+    public static String getMd5 (String src) {
+        try {
+            byte[] md5s = MessageDigest.getInstance("MD5").digest(src.getBytes());
+            String md5 = new BigInteger(md5s).toString(16);
+            return md5;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
         return null;
     }

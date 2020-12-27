@@ -16,5 +16,8 @@ public interface UserDao {
      * @param password 密码
      * @return true：正确 false：不正确
      */
-    boolean isValid(String username, String password);
+    User getUserByNameAndPasswd(String username, String password);
+
+    void updateTokenForUser(String username, String token);
+
 }

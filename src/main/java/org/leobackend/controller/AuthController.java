@@ -1,6 +1,8 @@
 package org.leobackend.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.leobackend.entity.LoginRequestDTO;
+import org.leobackend.entity.User;
 import org.leobackend.service.AuthService;
 import org.leobackend.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,11 @@ public class AuthController {
 
     @PostMapping ("/getToken")
     public String getToken (@RequestBody LoginRequestDTO requestDTO) {
-        boolean isValidUser = authService.userVerify (requestDTO.getUsername(), requestDTO.getPassword());
-        return isValidUser ? TokenUtils.createToken(requestDTO.getUsername(), requestDTO.getPassword()) : "非法用户";
+        String token = authService.getToken (requestDTO);
+        if (StringUtils.isEmpty(token)) {
+            return "用户不存在";
+        }
+        return token;
     }
 
     @GetMapping ("/error")

@@ -19,9 +19,14 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private UserMapper userMapper;
 
-    public boolean isValid(String username, String password) {
+    public User getUserByNameAndPasswd(String username, String password) {
         User user = userMapper.getUserByNameAndPasswd(username, password);
-        return user != null;
+        return user;
+    }
+
+    @Override
+    public void updateTokenForUser(String username, String token) {
+        userMapper.updateTokenForUser(username, token);
     }
 
 }
