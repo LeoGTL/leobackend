@@ -16,7 +16,7 @@ import java.util.Date;
  */
 public class LeoBackendTest {
 
-    @Test
+//    @Test
     public void crateToken () {
         /*
             iss: jwt签发者
@@ -36,7 +36,7 @@ public class LeoBackendTest {
         System.out.println(token);
     }
 
-    @Test
+//    @Test
     public void verifierToken () {
         String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3N1ZWREYXRlIjoxNjA5MDQ3MzUzLCJpc3N1ZXIiOiJsZW9iYWNrZW5kLm9yZyIsInVzZXJuYW1lIjoibGVvIn0.jJR3LsNKFBAV8b7TpFsvQAwG6-F33LgH_C50MN3Vd24";
 
