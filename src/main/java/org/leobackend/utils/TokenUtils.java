@@ -7,7 +7,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.leobackend.entity.TokenEntity;
 import org.springframework.beans.BeanUtils;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -52,7 +51,7 @@ public class TokenUtils {
             String username = decodedJWT.getClaim("username").asString();
             Date issuedDate = decodedJWT.getClaim("issuedDate").asDate();
             // 获取密码
-            List<Map<String, Object>> resultList = DbManager.getInstance().query ("select id,username,password,nickname,tel,email,token from t_sys_user where username=?",
+            List<Map<String, Object>> resultList = DBUtils.getInstance().select ("select id,username,password,nickname,tel,email,token from t_sys_user where username=?",
                     new String[]{"id","username","password","nickname","tel","email","token"}, new String[]{username});
             Map<String, Object> row = resultList.get(0);
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256((String) row.get("password")))

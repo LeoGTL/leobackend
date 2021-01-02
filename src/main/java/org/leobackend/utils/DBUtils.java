@@ -16,12 +16,12 @@ import java.util.*;
  *
  * @author Leo
  */
-public class DbManager {
+public class DBUtils {
 
     private BasicDataSource dataSource;
-    private static DbManager dbManager = new DbManager();
+    private static DBUtils dbManager = new DBUtils();
 
-    private DbManager () {
+    private DBUtils() {
         try {
             Properties properties = PropertiesLoaderUtils.loadAllProperties("dbcp.properties");
             dataSource = BasicDataSourceFactory.createDataSource(properties);
@@ -63,7 +63,7 @@ public class DbManager {
      * @param params ?占位符参数
      * @return 数据集合
      */
-    public List<Map<String, Object>> query(String sql, String[] labels, String[] params) {
+    public List<Map<String, Object>> select(String sql, String[] labels, String[] params) {
 
         Connection connection = null;
         try {
@@ -94,9 +94,9 @@ public class DbManager {
         return Collections.emptyList();
     }
 
-    public static DbManager getInstance () {
+    public static DBUtils getInstance () {
         if (dbManager == null)
-            dbManager = new DbManager();
+            dbManager = new DBUtils();
         return dbManager;
     }
 

@@ -2,9 +2,7 @@ package org.leobackend.controller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.leobackend.entity.LoginRequestDTO;
-import org.leobackend.entity.User;
 import org.leobackend.service.AuthService;
-import org.leobackend.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
