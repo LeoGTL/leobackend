@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
  *
  * @author Leo
  */
+//@EnableJms
 @SpringBootApplication
 @ComponentScan (basePackages = {"org.leobackend.*"})
 @MapperScan (basePackages = {"org.leobackend.mapper"})

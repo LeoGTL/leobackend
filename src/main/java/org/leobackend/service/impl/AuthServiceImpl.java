@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Leo
  */
-@Service
+@Service ("authService")
 public class AuthServiceImpl implements AuthService {
 
     @Autowired

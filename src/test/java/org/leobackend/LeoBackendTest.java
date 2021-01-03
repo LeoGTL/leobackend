@@ -6,6 +6,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.junit.Test;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 /**
@@ -36,19 +39,31 @@ public class LeoBackendTest {
         System.out.println(token);
     }
 
-//    @Test
+    @Test
     public void verifierToken () {
-        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3N1ZWREYXRlIjoxNjA5MDQ3MzUzLCJpc3N1ZXIiOiJsZW9iYWNrZW5kLm9yZyIsInVzZXJuYW1lIjoibGVvIn0.jJR3LsNKFBAV8b7TpFsvQAwG6-F33LgH_C50MN3Vd24";
+        String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3N1ZWREYXRlIjoxNjA5MDYxNzA3LCJpc3N1ZXIiOiJsZW9iYWNrZW5kLm9yZyIsInVzZXJuYW1lIjoibGVvIn0.8wPWwAzzHQPMXfUsZadkbYEw-Qsflw7g0yS9tk53mRM";
 
         DecodedJWT decodedJWT = JWT.decode(token);
         String username = decodedJWT.getClaim("username").asString();
         // 获取用户密码
-        JWTVerifier verifier = JWT.require(Algorithm.HMAC256("root1"))
+        JWTVerifier verifier = JWT.require(Algorithm.HMAC256("63a9f0ea7bb98050796b649e85481845"))
                 .withClaim("issuer", "leobackend.org")
                 .withClaim("username", username)
                 .build();
         DecodedJWT jwt = verifier.verify(token);
         System.out.println(1);
+    }
+
+    @Test
+    public void getMd5 () {
+        String src = "root";
+        try {
+            byte[] md5s = MessageDigest.getInstance("MD5").digest(src.getBytes());
+            String md5 = new BigInteger(md5s).toString(16);
+            System.out.println(md5);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
 }
